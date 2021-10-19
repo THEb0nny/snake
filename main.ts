@@ -1,6 +1,4 @@
-/**
- * https://www.cameronmacleod.com/blog/microbit-snake
- */
+// https://www.cameronmacleod.com/blog/microbit-snake
 function Update () {
     Incline()
     newSnakeHeadX = snakeX[snakeX.length - 1]
@@ -29,28 +27,31 @@ function Update () {
     snakeX.push(newSnakeHeadX)
     snakeY.push(newSnakeHeadY)
     if (newSnakeHeadX == food[0] && newSnakeHeadY == food[1]) {
-        GenerStartFood()
+        GenerFoodPos()
     } else {
         // Удаляем конец хвоста
         snakeX.shift()
         snakeY.shift()
     }
 }
+function GenerFoodPos () {
+    while (true) {
+        startFoodPosX = randint(0, 4)
+        startFoodPosY = randint(0, 4)
+        for (let index = 0; index <= snakeX.length; index++) {
+            if (snakeX[index] != startFoodPosX && snakeY[index] != startFoodPosY) {
+                break;
+            }
+        }
+    }
+    food = [startFoodPosX, startFoodPosY]
+}
 function Draw () {
     basic.clearScreen()
     led.plot(food[0], food[1])
-    for (let index = 0; index <= snakeX.length - 1; index++) {
-        led.plot(snakeX[index], snakeY[index])
+    for (let index2 = 0; index2 <= snakeX.length - 1; index2++) {
+        led.plot(snakeX[index2], snakeY[index2])
     }
-}
-function GenerStartFood () {
-    startFoodPos = [randint(0, 4), randint(0, 4)]
-    while (true) {
-        if (startFoodPos[0] != 2 && startFoodPos[1] != 2) {
-            break;
-        }
-    }
-    food = startFoodPos
 }
 function Incline () {
     x = input.acceleration(Dimension.X)
@@ -71,18 +72,19 @@ function Incline () {
 }
 let y = 0
 let x = 0
-let food: number[] = []
+let startFoodPosY = 0
+let startFoodPosX = 0
 let newSnakeHeadY = 0
 let newSnakeHeadX = 0
-let snakeY: number[] = []
-let snakeX: number[] = []
 let dir = ""
-let startFoodPos: number[] = []
-startFoodPos = []
-dir = "up"
+let food = 0
+let snakeY = 0
+let snakeX = 0
 snakeX = [2]
 snakeY = [2]
-GenerStartFood()
+food = [0, 0]
+dir = "up"
+GenerFoodPos()
 while (true) {
     Draw()
     Update()
