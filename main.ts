@@ -1,4 +1,6 @@
-// https://www.cameronmacleod.com/blog/microbit-snake
+/**
+ * https://www.cameronmacleod.com/blog/microbit-snake
+ */
 function Update () {
     Incline()
     newSnakeHeadX = snakeX[snakeX.length - 1]
@@ -40,8 +42,11 @@ function GenerFoodPos () {
         startFoodPosY = randint(0, 4)
         for (let index = 0; index <= snakeX.length; index++) {
             if (snakeX[index] != startFoodPosX && snakeY[index] != startFoodPosY) {
-                break;
+                generFoodFlag = true
             }
+        }
+        if (generFoodFlag) {
+            break;
         }
     }
     food = [startFoodPosX, startFoodPosY]
@@ -72,14 +77,15 @@ function Incline () {
 }
 let y = 0
 let x = 0
+let generFoodFlag = false
 let startFoodPosY = 0
 let startFoodPosX = 0
 let newSnakeHeadY = 0
 let newSnakeHeadX = 0
 let dir = ""
-let food = 0
-let snakeY = 0
-let snakeX = 0
+let food: number[] = []
+let snakeY: number[] = []
+let snakeX: number[] = []
 snakeX = [2]
 snakeY = [2]
 food = [0, 0]
